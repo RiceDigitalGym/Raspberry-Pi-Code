@@ -36,7 +36,7 @@ clf = nfc.ContactlessFrontend('usb')
 
 while True:
     #API_ENDPOINT = API_ENDPOINT = "digitalgym.cq4d8vjo7uoe.us-west-2.rds.amazonaws.com:3306" 
-    API_ENDPOINT = API_ENDPOINT = "http://52.34.141.31:8000/bbb/addsession"
+    API_ENDPOINT = API_ENDPOINT = "http://52.34.141.31:8000/bbb/process_tag"
     API_KEY = "ashu1234"
 
     tag = clf.connect(rdwr={'on-connect': connected})
