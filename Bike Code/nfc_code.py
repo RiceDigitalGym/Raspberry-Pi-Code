@@ -36,11 +36,11 @@ clf = nfc.ContactlessFrontend('usb')
 
 while True:
     #API_ENDPOINT = API_ENDPOINT = "digitalgym.cq4d8vjo7uoe.us-west-2.rds.amazonaws.com:3306" 
-    API_ENDPOINT = API_ENDPOINT = "http://52.34.141.31:8000/bbb/process_tag"
+    API_ENDPOINT = API_ENDPOINT = "http://0.0.0.0:8000/bbb/process_tag"
     API_KEY = "ashu1234"
 
     tag = clf.connect(rdwr={'on-connect': connected})
-    data = {"tag": tag, "bikeId": getserial()}
+    data = {"tag": tag, "machineID": getserial()}
     try:
         r = requests.post(url=API_ENDPOINT, data=data)
     except requests.exceptions.RequestException as e:
