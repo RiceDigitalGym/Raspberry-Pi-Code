@@ -1,4 +1,5 @@
 # Import required libraries
+import serial
 import RPi.GPIO as GPIO
 import time
 import json
@@ -10,19 +11,6 @@ import smtplib
 from email.mime.text import MIMEText
 
 global last_time
-
-def getserial():
-	cpuserial = "0000000000000000"
-	try:
-		f = open('/proc/cpuinfo' , 'r')
-		for line in f:
-			if line[0:6] == 'Serial':
-				cpuserial = line[10:26]
-		f.close()
-	except:
-		cpuserial = "ERROR000000000"
-	return int("0x" + cpuserial, 16)
-
 
 # Define the API endpoint:
 API_ENDPOINT = "http://52.34.141.31:8000/bbb/bike"
@@ -49,7 +37,7 @@ def sensorCallback1(channel):
         if ((1 / (current_time - last_time))*60 > 10):
             rpm = (1 / (current_time - last_time)) * 60
             print "Rpm:" + str(int(rpm))
-            post_data = {"rpm": rpm, "bikeId": getserial()}
+            post_data = {"rpm": rpm, "bikeId": serial.getserial()}
             try:
                 r = requests.post(url=API_ENDPOINT, data=post_data)
             except requests.exceptions.RequestException as error:
@@ -73,14 +61,14 @@ def main():
         while True:
             #print "Missing: "+ str(miss)
             if(not (sessionid == -1) and miss == 20):
-                print "Sessionid: "+str(sessionid)
+                print("Sessionid: "+str(sessionid))
                 logout = requests.post(url=API_LOG_OUT, data={"userId": sessionid})
                 sessionid = -1
 
             miss += 1
             time.sleep(5)
             if miss >= 3:
-                data2 = {"rpm": 0, "bikeId": getserial()}
+                data2 = {"rpm": 0, "bikeId": serial.getserial()}
 
                 try:
                     if(sessionid == -1):
@@ -95,10 +83,10 @@ def main():
                         # sessionid = session.user.id
                         # print "sesionid"
                         # print sessionid
-                        print("0 Response Posted")
+                        print "0 Response Posted"
 
                     else:
-                        print("0 Response NOT Posted")
+                        print "0 Response NOT Posted"
 
                 except requests.exceptions.RequestException as e:
                     print e
@@ -111,7 +99,7 @@ def main():
 
 GPIO.setmode(GPIO.BCM)
 
-print "Setup of GPIO pin as Input for RPM Sensor"
+print("Setup of GPIO pin as Input for RPM Sensor")
 
 # Set switch GPIO as input
 
