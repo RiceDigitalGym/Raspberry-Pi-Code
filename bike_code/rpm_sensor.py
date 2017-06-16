@@ -29,12 +29,10 @@ def sensorCallback1(channel):
     if not last_time:
         last_time = time.time()
 
-
     current_time = time.time() 
 
-
-    if ((1 / (current_time - last_time))*60 < 200):
-        if ((1 / (current_time - last_time))*60 > 10):
+    if (1 / (current_time - last_time)) * 60 < 200:
+        if (1 / (current_time - last_time)) * 60 > 10:
             rpm = (1 / (current_time - last_time)) * 60
             print "Rpm:" + str(int(rpm))
             post_data = {"rpm": rpm, "bikeId": serial.getserial()}
@@ -59,8 +57,7 @@ def main():
     """
     try:
         while True:
-            #print "Missing: "+ str(miss)
-            if(not (sessionid == -1) and miss == 20):
+            if not (sessionid == -1) and miss == 20:
                 print("Sessionid: "+str(sessionid))
                 logout = requests.post(url=API_LOG_OUT, data={"userId": sessionid})
                 sessionid = -1
@@ -71,12 +68,12 @@ def main():
                 data2 = {"rpm": 0, "bikeId": serial.getserial()}
 
                 try:
-                    if(sessionid == -1):
+                    if sessionid == -1:
                         session = requests.get(url=API_SESSION_CHECK)
                         data = json.loads(session.text)
                         miss=3
 
-                    if(data and not (data['status'] == "failure")):
+                    if data and not (data['status'] == "failure"):
 
                         r = requests.post(url=API_ENDPOINT, data=data2)
                         sessionid = data['user']['id']
@@ -90,8 +87,6 @@ def main():
 
                 except requests.exceptions.RequestException as e:
                     print e
-
-
 
     except KeyboardInterrupt:
         GPIO.cleanup()

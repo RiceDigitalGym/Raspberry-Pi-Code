@@ -14,7 +14,7 @@ import httplib
 
 
 def connected(tag):
-    print(tag);
+    print(tag)
     return False
 
 clf = nfc.ContactlessFrontend('usb')
