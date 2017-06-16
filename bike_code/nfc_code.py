@@ -26,14 +26,15 @@ while True:
 
     RFID = clf.connect(rdwr={'on-connect': connected})
     data = {"RFID": RFID, "serialNumber": serial.getserial()}
-    try:
+    try: #TODO: This try-except may be wrong
         r = requests.post(url=API_ENDPOINT, data=data)
+        # extracting response text
+        pastebin_url = r.text
+        print("the pastebin URL is: %s" % pastebin_url)
     except requests.exceptions.RequestException as e:
         print e
 
 
 
-    # extracting response text
-    pastebin_url = r.text
-    print("the pastebin URL is: %s" % pastebin_url)
+
 
