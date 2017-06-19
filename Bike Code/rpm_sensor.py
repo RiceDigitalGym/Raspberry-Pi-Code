@@ -35,7 +35,7 @@ def sensorCallback1(channel):
         if (1 / (current_time - last_time)) * 60 > 10:
             rpm = (1 / (current_time - last_time)) * 60
             print "Rpm:" + str(int(rpm))
-            post_data = {"rpm": rpm, "bikeId": serial.getserial()}
+            post_data = {"rpm": rpm, "bikeID": serial.getserial()}
             try:
                 r = requests.post(url=API_ENDPOINT, data=post_data)
             except requests.exceptions.RequestException as error:
@@ -65,7 +65,7 @@ def main():
             miss += 1
             time.sleep(5)
             if miss >= 3:
-                data2 = {"rpm": 0, "bikeId": serial.getserial()}
+                data2 = {"rpm": 0, "bikeID": serial.getserial()}
 
                 try:
                     if sessionid == -1:
