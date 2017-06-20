@@ -24,8 +24,8 @@ while True:
     API_ENDPOINT = API_ENDPOINT = "http://52.34.141.31:8000/bbb/process_tag"
     API_KEY = "ashu1234"
 
-    RFID = clf.connect(rdwr={'on-connect': connected})
-    data = {"RFID": RFID, "serialNumber": serial.getserial()}
+    Tag = clf.connect(rdwr={'on-connect': connected})
+    data = {"RFID": Tag.identifier(), "serialNumber": serial.getserial()}
     try: #TODO: This try-except may be wrong
         r = requests.post(url=API_ENDPOINT, data=data)
         # extracting response text
