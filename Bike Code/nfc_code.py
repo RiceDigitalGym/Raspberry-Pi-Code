@@ -14,7 +14,7 @@ import httplib
 
 
 def connected(tag):
-    print(tag)
+    print (tag)
     return False
 
 clf = nfc.ContactlessFrontend('usb')
@@ -25,7 +25,8 @@ while True:
     API_KEY = "ashu1234"
 
     Tag = clf.connect(rdwr={'on-connect': connected})
-    data = {"RFID": Tag.identifier(), "serialNumber": serial.getserial()}
+    RFID = int("0x" + str(Tag.identifier.encode("hex")), 16)
+    data = {"RFID": RFID, "serialNumber": serial.getserial()}
     try: #TODO: This try-except may be wrong
         r = requests.post(url=API_ENDPOINT, data=data)
         # extracting response text
