@@ -38,6 +38,7 @@ def sensorCallback1(channel):
             post_data = {"rpm": rpm, "serialNumber": serial.getserial()}
             try:
                 r = requests.post(url=API_ENDPOINT, data=post_data)
+                print json.loads(r.text)["status"]
             except requests.exceptions.RequestException as error:
                 print error
 
