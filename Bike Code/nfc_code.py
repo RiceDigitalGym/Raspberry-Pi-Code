@@ -6,16 +6,16 @@ Carl Henderson Feb 2017
 
 import serial
 import nfc
-import time
-import datetime
 import requests
+import json
 import urllib
 import httplib
-import json
+import time
+import datetime
 
 
 def connected(tag):
-    print ("Tag: " + str(tag))
+    print ("\nTag Name: " + str(tag))
     return False
 
 clf = nfc.ContactlessFrontend('usb')
@@ -26,7 +26,7 @@ while True:
 
     tag = clf.connect(rdwr={'on-connect': connected})
 
-    if (tag == False):
+    if not tag:  # When CTRL-C is entered
         print "\nNFC Sensor Disconnected"
         break
 
@@ -35,9 +35,8 @@ while True:
     data = {"RFID": RFID, "serialNumber": serial.getserial()}
     try:
         r = requests.post(url=API_ENDPOINT, data=data)
-        # extracting response text
-        resp = json.loads(r.text)
-        print("Status: %s" % resp["status"])
+        resp = json.loads(r.text)  # extracting response text
+        print("Tag Status: %s" % resp["status"])
     except requests.exceptions.RequestException as e:
         print "ERROR: " + str(e)
 
