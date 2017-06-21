@@ -90,6 +90,7 @@ def main():
 
     except KeyboardInterrupt:
         GPIO.cleanup()
+        raise SystemExit
 
 
 GPIO.setmode(GPIO.BCM)
