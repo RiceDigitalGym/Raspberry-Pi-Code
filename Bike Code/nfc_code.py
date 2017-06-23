@@ -27,7 +27,7 @@ while True:
 
     if not tag:  # When CTRL-C is entered
         print "\nNFC Sensor Disconnected"
-        break
+        raise SystemExit
 
     # Extract the ID from the Tag object and convert it into an integer
     RFID = int("0x" + str(tag.identifier.encode("hex")), 16)
