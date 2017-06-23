@@ -11,19 +11,20 @@ import smtplib
 from email.mime.text import MIMEText
 
 global last_time
+global miss
 
 # Define the API endpoint:
 API_ENDPOINT = "http://52.34.141.31:8000/bbb/bike"
 API_SESSION_CHECK = "http://52.34.141.31:8000/bbb/sessionlisten"
 API_LOG_OUT = "http://52.34.141.31:8000/bbb/logout"
 
-def sensorCallback1(channel):
+
+def sensor_callback(channel):
     """
     This function is function that is called when the Hall Effect sensor is triggered
     """
     global last_time
     global miss
-    global sessionid
 
     miss = 0
     if not last_time:
@@ -47,10 +48,7 @@ def sensorCallback1(channel):
 
 def main():
     global miss
-    global sessionid
 
-
-    sessionid = -1
     miss = 0
 
     """
@@ -106,7 +104,7 @@ print("Setup of GPIO pin as Input for RPM Sensor")
 # Set switch GPIO as input
 
 GPIO.setup(27, GPIO.IN)
-GPIO.add_event_detect(27, GPIO.FALLING, callback=sensorCallback1)
+GPIO.add_event_detect(27, GPIO.FALLING, callback=sensor_callback)
 
 if __name__ == "__main__":
     last_time = 0
