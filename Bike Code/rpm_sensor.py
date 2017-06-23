@@ -34,7 +34,7 @@ def sensorCallback1(channel):
     if (1 / (current_time - last_time)) * 60 < 200:
         if (1 / (current_time - last_time)) * 60 > 10:
             rpm = (1 / (current_time - last_time)) * 60
-            print "Rpm:" + str(int(rpm))
+            print "Rpm: " + str(int(rpm))
             post_data = {"rpm": rpm, "serialNumber": serial.getserial()}
             try:
                 r = requests.post(url=API_ENDPOINT, data=post_data)
@@ -58,36 +58,41 @@ def main():
     """
     try:
         while True:
-            if not (sessionid == -1) and miss == 20:
-                print("Sessionid: "+str(sessionid))
-                logout = requests.post(url=API_LOG_OUT, data={"userId": sessionid})
-                sessionid = -1
+            # if not (sessionid == -1) and miss == 20:
+            #     print("Sessionid: "+str(sessionid))
+            #     logout = requests.post(url=API_LOG_OUT, data={"userId": sessionid})
+            #     sessionid = -1
+            #
+            # miss += 1
+            # time.sleep(5)
+            # if miss >= 3:
+            #     data2 = {"rpm": 0, "bikeID": serial.getserial()}
+            #
+            #     try:
+            #         if sessionid == -1:
+            #             session = requests.get(url=API_SESSION_CHECK)
+            #             data = json.loads(session.text)
+            #             miss=3
+            #
+            #         if data and not (data['status'] == "failure"):
+            #
+            #             r = requests.post(url=API_ENDPOINT, data=data2)
+            #             sessionid = data['user']['id']
+            #             # sessionid = session.user.id
+            #             # print "sesionid"
+            #             # print sessionid
+            #             print "0 Response Posted"
+            #
+            #         else:
+            #             print "0 Response NOT Posted"
+            #
+            #     except requests.exceptions.RequestException as e:
+            #         print e
 
-            miss += 1
-            time.sleep(5)
-            if miss >= 3:
-                data2 = {"rpm": 0, "bikeID": serial.getserial()}
-
-                try:
-                    if sessionid == -1:
-                        session = requests.get(url=API_SESSION_CHECK)
-                        data = json.loads(session.text)
-                        miss=3
-
-                    if data and not (data['status'] == "failure"):
-
-                        r = requests.post(url=API_ENDPOINT, data=data2)
-                        sessionid = data['user']['id']
-                        # sessionid = session.user.id
-                        # print "sesionid"
-                        # print sessionid
-                        print "0 Response Posted"
-
-                    else:
-                        print "0 Response NOT Posted"
-
-                except requests.exceptions.RequestException as e:
-                    print e
+            if 0 < miss < 15:
+                miss += 1
+                time.sleep(2)
+                print "Rpm: 0"
 
     except KeyboardInterrupt:
         GPIO.cleanup()
