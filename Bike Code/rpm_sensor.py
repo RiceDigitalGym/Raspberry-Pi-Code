@@ -21,8 +21,12 @@ API_LOG_OUT = "http://52.34.141.31:8000/bbb/logout"
 
 
 def sigint_handler(*args):
-    GPIO.cleanup()
-    print "Disconnecting RPM Sensor"
+    """
+    Signal Handler that is executed whenever the user presses CTRL-C on the terminal
+    or when a SIGINT signal is sent to the program.
+    """
+    GPIO.cleanup()  # Clean up ports being used to prevent damage.
+    print "\nRPM Sensor Disconnected"
     raise SystemExit
 
 
@@ -80,6 +84,6 @@ GPIO.setup(27, GPIO.IN)
 GPIO.add_event_detect(27, GPIO.FALLING, callback=sensor_callback)
 
 if __name__ == "__main__":
-    signal.signal(signal.SIGINT, sigint_handler)
+    signal.signal(signal.SIGINT, sigint_handler)  # Register SIGINT handler
     last_time = 0
     main()
