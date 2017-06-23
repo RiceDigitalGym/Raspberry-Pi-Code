@@ -56,41 +56,11 @@ def main():
     """
     try:
         while True:
-            # if not (sessionid == -1) and miss == 20:
-            #     print("Sessionid: "+str(sessionid))
-            #     logout = requests.post(url=API_LOG_OUT, data={"userId": sessionid})
-            #     sessionid = -1
-            #
-            # miss += 1
-            # time.sleep(5)
-            # if miss >= 3:
-            #     data2 = {"rpm": 0, "bikeID": serial.getserial()}
-            #
-            #     try:
-            #         if sessionid == -1:
-            #             session = requests.get(url=API_SESSION_CHECK)
-            #             data = json.loads(session.text)
-            #             miss=3
-            #
-            #         if data and not (data['status'] == "failure"):
-            #
-            #             r = requests.post(url=API_ENDPOINT, data=data2)
-            #             sessionid = data['user']['id']
-            #             # sessionid = session.user.id
-            #             # print "sesionid"
-            #             # print sessionid
-            #             print "0 Response Posted"
-            #
-            #         else:
-            #             print "0 Response NOT Posted"
-            #
-            #     except requests.exceptions.RequestException as e:
-            #         print e
-
-            if 0 < miss < 15:
+            if miss < 15:
                 miss += 1
                 time.sleep(2)
-                print "Rpm: 0"
+                if miss > 1:
+                    print "Rpm: 0"
 
     except KeyboardInterrupt:
         GPIO.cleanup()
