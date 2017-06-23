@@ -3,8 +3,9 @@ import serial
 import RPi.GPIO as GPIO
 import time
 import json
-import datetime
 import requests
+import signal
+import datetime
 import urllib
 import httplib
 import smtplib
@@ -17,6 +18,12 @@ global miss
 API_ENDPOINT = "http://52.34.141.31:8000/bbb/bike"
 API_SESSION_CHECK = "http://52.34.141.31:8000/bbb/sessionlisten"
 API_LOG_OUT = "http://52.34.141.31:8000/bbb/logout"
+
+
+def sigint_handler(*args):
+    GPIO.cleanup()
+    print "Disconnecting RPM Sensor"
+    raise SystemExit
 
 
 def sensor_callback(channel):
@@ -54,18 +61,13 @@ def main():
     """
     This following try catch is for positing zeros if the hall effect is  not triggered
     """
-    try:
-        while True:
-            if miss < 15:
-                miss += 1
-                time.sleep(2)
-                if miss > 1:
-                    print "Rpm: 0"
+    while True:
+        if miss < 15:
+            miss += 1
+            time.sleep(2)
+            if miss > 1:
+                print "Rpm: 0"
 
-    except KeyboardInterrupt:
-        GPIO.cleanup()
-        print "Disconnecting RPM Sensor"
-        raise SystemExit
 
 
 GPIO.setmode(GPIO.BCM)
@@ -78,5 +80,6 @@ GPIO.setup(27, GPIO.IN)
 GPIO.add_event_detect(27, GPIO.FALLING, callback=sensor_callback)
 
 if __name__ == "__main__":
+    signal.signal(signal.SIGINT, sigint_handler)
     last_time = 0
     main()
