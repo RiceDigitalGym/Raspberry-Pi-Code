@@ -64,6 +64,7 @@ def main():
 
     except KeyboardInterrupt:
         GPIO.cleanup()
+        print "Disconnecting RPM Sensor"
         raise SystemExit
 
 
