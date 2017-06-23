@@ -15,7 +15,7 @@ global last_time
 # Define the API endpoint:
 API_ENDPOINT = "http://52.34.141.31:8000/bbb/bike"
 API_SESSION_CHECK = "http://52.34.141.31:8000/bbb/sessionlisten"
-API_LOG_OUT = "http://52.34.141.31:8000/bbb/logout"
+API_END_WORKOUT = "http://52.34.141.31:8000/bbb/end_workout"
 
 def sensorCallback1(channel):
     """
@@ -29,7 +29,7 @@ def sensorCallback1(channel):
     if not last_time:
         last_time = time.time()
 
-    current_time = time.time() 
+    current_time = time.time()
 
     if (1 / (current_time - last_time)) * 60 < 200:
         if (1 / (current_time - last_time)) * 60 > 10:
@@ -59,7 +59,7 @@ def main():
         while True:
             if not (sessionid == -1) and miss == 20:
                 print("Sessionid: "+str(sessionid))
-                logout = requests.post(url=API_LOG_OUT, data={"userId": sessionid})
+                logout = requests.post(url=API_END_WORKOUT, data={"RFID": sessionid})
                 sessionid = -1
 
             miss += 1
@@ -76,7 +76,7 @@ def main():
                     if data and not (data['status'] == "failure"):
 
                         r = requests.post(url=API_ENDPOINT, data=data2)
-                        sessionid = data['user']['id']
+                        sessionid = data['tag']['RFID']
                         # sessionid = session.user.id
                         # print "sesionid"
                         # print sessionid
