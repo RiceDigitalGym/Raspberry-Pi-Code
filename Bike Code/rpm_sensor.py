@@ -71,6 +71,8 @@ def main():
             time.sleep(2)
             if miss > 1:
                 print "Rpm: 0"
+        else:
+            logout = request.post(url = API_END_WORKOUT, data = {"machineID": serial.getserial()})
 
 
 
