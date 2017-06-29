@@ -22,7 +22,7 @@ API_LOG_OUT = "http://52.34.141.31:8000/bbb/logout"
 
 def sigint_handler(*args):
     GPIO.cleanup()
-    print "Disconnecting RPM Sensor"
+    print "\nRPM Sensor Disconnected"
     raise SystemExit
 
 

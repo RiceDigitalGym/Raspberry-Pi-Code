@@ -19,7 +19,7 @@ def sigint_handler(*args):
     Signal Handler that is executed whenever the user presses CTRL-C on the terminal
     or when a SIGINT signal is sent to the program.
     """
-    print "NFC Sensor Disconnected"
+    print "\nNFC Sensor Disconnected"
     raise SystemExit  # Exit program after printing statement.
 
 
