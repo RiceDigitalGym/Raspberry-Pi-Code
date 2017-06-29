@@ -20,3 +20,5 @@ def getserial():
         print "Could not find Serial No. of Pi"
         cpuserial = "ERROR000000000"  # Couldn't find file.
     return int("0x" + cpuserial, 16)  # Convert from hex to int
+
+print getserial()
