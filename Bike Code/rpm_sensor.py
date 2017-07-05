@@ -74,6 +74,7 @@ def main():
         if miss == 15:
 			logout = requests.post(url = API_END_WORKOUT, data = {"serial": serial.getserial()})
 
+
 GPIO.setmode(GPIO.BCM)
 
 print("Setup of GPIO pin as Input for RPM Sensor")
