@@ -11,12 +11,14 @@ import httplib
 import smtplib
 from email.mime.text import MIMEText
 
+global first
 global last_time
 global miss
 
 # Define the API endpoint:
 API_ENDPOINT = "http://52.34.141.31:8000/bbb/bike"
 API_SESSION_CHECK = "http://52.34.141.31:8000/bbb/sessionlisten"
+API_START_WORKOUT = "http://52.34.141.31:8000/bbb/start_workout"
 API_END_WORKOUT = "http://52.34.141.31:8000/bbb/end_workout"
 
 
@@ -34,8 +36,13 @@ def sensor_callback(channel):
     """
     This function is function that is called when the Hall Effect sensor is triggered
     """
+    global first
     global last_time
     global miss
+
+    if first == True:
+        start_workout()
+        first = False
 
     miss = 0
     if not last_time:
@@ -57,14 +64,32 @@ def sensor_callback(channel):
         last_time = current_time
 
 
+def start_workout():
+    try:
+        post_data = {"serialNumber": serial.getserial()}
+        r = requests.post(url=API_START_WORKOUT, data=post_data)
+        print "Start workout status: " + json.loads(r.text)["status"]
+    except requests.exceptions.RequestException as error:
+        print error
+
+
+def end_workout():
+    try:
+        post_data = {"serialNumber": serial.getserial()}
+        r = requests.post(url=API_END_WORKOUT, data=post_data)
+        print "End workout status: " + json.loads(r.text)["status"]
+    except requests.exceptions.RequestException as error:
+        print error
+
+
 def main():
+    global first
     global miss
 
+    first = True
     miss = 0
 
-    """
-    This following try catch is for positing zeros if the hall effect is  not triggered
-    """
+    # This following try catch is for positing zeros if the hall effect is not triggered
     while True:
         if miss < 15:
             miss += 1
@@ -72,7 +97,8 @@ def main():
             if miss > 1:
                 print "Rpm: 0"
         if miss == 15:
-			logout = requests.post(url = API_END_WORKOUT, data = {"serialNumber": serial.getserial()})
+            end_workout()
+            first = True
 
 
 GPIO.setmode(GPIO.BCM)
