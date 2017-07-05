@@ -91,6 +91,7 @@ def main():
 
     # This following try catch is for positing zeros if the hall effect is not triggered
     while True:
+        miss += 1
         if miss < 15:
             time.sleep(2)
             if miss > 1:
@@ -98,7 +99,6 @@ def main():
         if miss == 15:
             end_workout()
             first = True
-        miss += 1
 
 
 GPIO.setmode(GPIO.BCM)
