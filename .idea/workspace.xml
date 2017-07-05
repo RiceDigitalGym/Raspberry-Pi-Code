@@ -32,8 +32,8 @@
       <file leaf-file-name="rpm_sensor.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Bike Code/rpm_sensor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1768">
-              <caret line="100" column="24" lean-forward="true" selection-start-line="100" selection-start-column="24" selection-end-line="100" selection-end-column="24" />
+            <state relative-caret-position="780">
+              <caret line="69" column="9" lean-forward="false" selection-start-line="69" selection-start-column="8" selection-end-line="69" selection-end-column="9" />
               <folding>
                 <element signature="e#28#41#0" expanded="true" />
               </folding>
@@ -351,7 +351,14 @@
       <option name="project" value="LOCAL" />
       <updated>1499283364654</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Created functions for starting and ending the workout.">
+      <created>1499286390017</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1499286390017</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -574,8 +581,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Bike Code/rpm_sensor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1768">
-          <caret line="100" column="24" lean-forward="true" selection-start-line="100" selection-start-column="24" selection-end-line="100" selection-end-column="24" />
+        <state relative-caret-position="780">
+          <caret line="69" column="9" lean-forward="false" selection-start-line="69" selection-start-column="8" selection-end-line="69" selection-end-column="9" />
           <folding>
             <element signature="e#28#41#0" expanded="true" />
           </folding>
