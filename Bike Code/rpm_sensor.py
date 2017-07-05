@@ -17,7 +17,7 @@ global miss
 # Define the API endpoint:
 API_ENDPOINT = "http://52.34.141.31:8000/bbb/bike"
 API_SESSION_CHECK = "http://52.34.141.31:8000/bbb/sessionlisten"
-API_LOG_OUT = "http://52.34.141.31:8000/bbb/logout"
+API_END_WORKOUT = "http://52.34.141.31:8000/bbb/end_workout"
 
 
 def sigint_handler(*args):
@@ -41,7 +41,7 @@ def sensor_callback(channel):
     if not last_time:
         last_time = time.time()
 
-    current_time = time.time() 
+    current_time = time.time()
 
     if (1 / (current_time - last_time)) * 60 < 200:
         if (1 / (current_time - last_time)) * 60 > 10:
@@ -71,7 +71,8 @@ def main():
             time.sleep(2)
             if miss > 1:
                 print "Rpm: 0"
-
+        if miss == 15:
+			logout = requests.post(url = API_END_WORKOUT, data = {"serial": serial.getserial()})
 
 
 GPIO.setmode(GPIO.BCM)
