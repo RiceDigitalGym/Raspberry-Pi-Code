@@ -66,13 +66,14 @@ def main():
     This following try catch is for positing zeros if the hall effect is  not triggered
     """
     while True:
-        if miss < 15:
-            miss += 1
+		if miss < 15:
+			miss += 1
             time.sleep(2)
-            if miss > 1:
-                print "Rpm: 0"
-        	if miss == 15:
-				logout = requests.post(url = API_END_WORKOUT, data = {"serial": serial.getserial()})
+		if miss > 1:
+			print "Rpm: 0"
+		if miss == 15:
+			logout = requests.post(url = API_END_WORKOUT, data = {"serial": serial.getserial()})
+			break
 
 GPIO.setmode(GPIO.BCM)
 
