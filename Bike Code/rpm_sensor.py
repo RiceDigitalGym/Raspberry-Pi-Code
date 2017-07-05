@@ -71,8 +71,8 @@ def main():
             time.sleep(2)
             if miss > 1:
                 print "Rpm: 0"
-        	if miss == 15:
-				logout = requests.post(url = API_END_WORKOUT, data = {"serial": serial.getserial()})
+        if miss == 15:
+			logout = requests.post(url = API_END_WORKOUT, data = {"serial": serial.getserial()})
 
 GPIO.setmode(GPIO.BCM)
 
