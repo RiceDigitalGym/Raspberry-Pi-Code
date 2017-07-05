@@ -72,7 +72,7 @@ def main():
 	if miss > 1:
 		print "Rpm: 0"
 	if miss == 15:
-		logout = requests.post(url = API_END_WORKOUT, data = {"serial": serial.getserial()})
+		logout = requests.post(url = API_END_WORKOUT, data = {"serialNumber": serial.getserial()})
 		break
 
 GPIO.setmode(GPIO.BCM)
