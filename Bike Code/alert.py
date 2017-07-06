@@ -1,6 +1,7 @@
 import smtplib
 from email.mime.text import MIMEText
 import time
+import signal
 import json
 import serial
 import requests
@@ -15,6 +16,15 @@ serial_num = serial.getserial()               # Serial Number of bike this code 
 # serial_num = "12345"
 
 global error  # Global variable indicating whether there is an error currently
+
+
+def sigint_handler(*args):
+    """
+    Signal Handler that is executed whenever the user presses CTRL-C on the terminal
+    or when a SIGINT signal is sent to the program.
+    """
+    print "\nAlert Stopped"
+    raise SystemExit
 
 
 def main():
@@ -66,4 +76,5 @@ def send_email(event):
 if __name__ == "__main__":
     server.starttls()
     server.login(me, "ashu1234")  # Login into sender email address
+    signal.signal(signal.SIGINT, sigint_handler)  # Register SIGINT handler
     main()

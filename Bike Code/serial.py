@@ -6,9 +6,9 @@ June 2017
 
 def getserial():
     """
-	Returns the unique integer serial number associated with the raspberry pi 
-	this code is running on.
-	"""
+    Returns the unique integer serial number associated with the raspberry pi
+    this code is running on.
+    """
     cpuserial = "0000000000000000"
     try:
         f = open('/proc/cpuinfo', 'r')  # Open file that contains serial no.
@@ -21,4 +21,5 @@ def getserial():
         cpuserial = "ERROR000000000"  # Couldn't find file.
     return int("0x" + cpuserial, 16)  # Convert from hex to int
 
-print getserial()
+if __name__ == "__main__":
+    print getserial()

@@ -28,6 +28,8 @@ def sigint_handler(*args):
     or when a SIGINT signal is sent to the program.
     """
     GPIO.cleanup()  # Clean up ports being used to prevent damage.
+    if not first:
+        end_workout()
     print "\nRPM Sensor Disconnected"
     raise SystemExit
 
