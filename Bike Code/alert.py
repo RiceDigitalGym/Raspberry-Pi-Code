@@ -56,7 +56,7 @@ def send_email(event):
 
     msg = MIMEText(data)
 
-    msg["Subject"] = "Connection " + event + " on Bike Serial #" + serial_num
+    msg["Subject"] = "Connection " + event + " on Bike Serial #" + str(serial_num)
     msg["From"] = me
     msg["To"] = target
 
