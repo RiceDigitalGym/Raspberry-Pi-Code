@@ -32,6 +32,8 @@ def main():
 
     error = False  # No error initially
 
+    print "Alert Started"
+
     while True:
         time.sleep(10)  # Recheck connection with server every 10 seconds
         try:
