@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="bec2cc56-b0dc-485d-a444-13003986d26c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Bike Code/rpm_sensor.py" afterPath="$PROJECT_DIR$/Bike Code/rpm_sensor.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -463,7 +462,14 @@
       <option name="project" value="LOCAL" />
       <updated>1499890003577</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Fixed session ending after tag scanned.">
+      <created>1499891469662</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1499891469662</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -513,7 +519,8 @@
     <MESSAGE value="changed type to string" />
     <MESSAGE value="fixed a few minor bugs" />
     <MESSAGE value="Created the checkRPM request call to the backend code." />
-    <option name="LAST_COMMIT_MESSAGE" value="Created the checkRPM request call to the backend code." />
+    <MESSAGE value="Fixed session ending after tag scanned." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed session ending after tag scanned." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
