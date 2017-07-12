@@ -21,8 +21,8 @@
       <file leaf-file-name="nfc_code.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Bike Code/nfc_code.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="409">
-              <caret line="50" column="19" lean-forward="false" selection-start-line="50" selection-start-column="19" selection-end-line="50" selection-end-column="19" />
+            <state relative-caret-position="390">
+              <caret line="49" column="48" lean-forward="false" selection-start-line="49" selection-start-column="48" selection-end-line="49" selection-end-column="48" />
               <folding>
                 <element signature="e#80#93#0" expanded="true" />
               </folding>
@@ -449,7 +449,14 @@
       <option name="project" value="LOCAL" />
       <updated>1499367052880</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Created the checkRPM request call to the backend code.">
+      <created>1499889961667</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1499889961667</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -498,7 +505,8 @@
     <MESSAGE value="Fixed script file and python code" />
     <MESSAGE value="changed type to string" />
     <MESSAGE value="fixed a few minor bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed a few minor bugs" />
+    <MESSAGE value="Created the checkRPM request call to the backend code." />
+    <option name="LAST_COMMIT_MESSAGE" value="Created the checkRPM request call to the backend code." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -971,8 +979,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Bike Code/nfc_code.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="50" column="19" lean-forward="false" selection-start-line="50" selection-start-column="19" selection-end-line="50" selection-end-column="19" />
+        <state relative-caret-position="390">
+          <caret line="49" column="48" lean-forward="false" selection-start-line="49" selection-start-column="48" selection-end-line="49" selection-end-column="48" />
           <folding>
             <element signature="e#80#93#0" expanded="true" />
           </folding>

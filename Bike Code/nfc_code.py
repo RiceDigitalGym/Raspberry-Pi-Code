@@ -36,7 +36,7 @@ signal.signal(signal.SIGINT, sigint_handler)
 
 while True:
     API_PROCESS = "http://52.34.141.31:8000/bbb/process_tag"
-    API_CHECKRPM = "http://52.34.141.31:8000/bbb/check_rpm"
+    API_CHECK = "http://52.34.141.31:8000/bbb/check_rpm"
 
     tag = clf.connect(rdwr={'on-connect': connected})
 
@@ -47,7 +47,7 @@ while True:
         r_process = requests.post(url=API_PROCESS, data=data)
         resp = json.loads(r_process.text)  # extracting response text
         print("Tag Status: %s" % resp["status"])
-        r_checkRPM = requests.post(url=API_CHECKRPM, data=data)
+        r_checkRPM = requests.post(url=API_CHECK, data=data)
     except requests.exceptions.RequestException as e:
         print "ERROR: " + str(e)
 
