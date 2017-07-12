@@ -4,7 +4,7 @@ Carl Henderson Feb 2017
 hi prithvi1
 """
 
-import serial
+import serial_utils
 import nfc
 import requests
 import json
@@ -41,7 +41,7 @@ while True:
 
     # Extract the ID from the Tag object and convert it into an integer
     RFID = int("0x" + str(tag.identifier.encode("hex")), 16)
-    data = {"RFID": RFID, "serialNumber": serial.getserial()}
+    data = {"RFID": RFID, "serialNumber": serial_utils.getserial()}
     try:
         r = requests.post(url=API_ENDPOINT, data=data)
         resp = json.loads(r.text)  # extracting response text

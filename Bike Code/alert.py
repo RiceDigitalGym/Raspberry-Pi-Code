@@ -3,8 +3,9 @@ from email.mime.text import MIMEText
 import time
 import signal
 import json
-import serial
+import serial_utils
 import requests
+# import logging
 
 # API endpoint for testing connection with backend.
 API_TEST_CONNECTION = "http://52.34.141.31:8000/bbb/test_connection"
@@ -12,8 +13,9 @@ API_TEST_CONNECTION = "http://52.34.141.31:8000/bbb/test_connection"
 me = "digital.gym.alert@gmail.com"            # Email address for sender
 target = "hn9@rice.edu"                       # Email address for recipient
 server = smtplib.SMTP("smtp.gmail.com", 587)  # Initiate Email Server
-serial_num = serial.getserial()               # Serial Number of bike this code is running on
-# serial_num = "12345"
+logger = serial_utils.get_logger("Alert")
+# serial_num = util_functions.getserial()               # Serial Number of bike this code is running on
+serial_num = "12345"
 
 global error  # Global variable indicating whether there is an error currently
 
@@ -24,6 +26,7 @@ def sigint_handler(*args):
     or when a SIGINT signal is sent to the program.
     """
     print "\nAlert Stopped"
+    logger.info("Connection Status Alert Stopped")
     raise SystemExit
 
 
@@ -33,6 +36,7 @@ def main():
     error = False  # No error initially
 
     print "Alert Started"
+    logger.info("Connection Status Alert Activated")
 
     while True:
         time.sleep(10)  # Recheck connection with server every 10 seconds
@@ -40,18 +44,23 @@ def main():
             resp = requests.get(API_TEST_CONNECTION)  # Test Connection
             print json.loads(resp.text)["status"]  # Should be "success" if connection established
 
+            logger.debug("Connection attempt to server successful")
+
             # If there was previously an error, erase it and send an email signifying that
             # the connection with the server has been restored.
             if error:
                 error = False
+                logger.info("Connection to server restored")
                 send_email("Restored")
 
         except requests.exceptions.RequestException as e:
             print e
+            logger.debug("Connection attempt to server failed")
             # If there wasn't previously an error, create it and send an email signifying that
             # the connection with the server has failed.
             if not error:
                 error = True
+                logger.error("No Connection to server")
                 send_email("Failed")
 
 
@@ -72,11 +81,16 @@ def send_email(event):
     msg["From"] = me
     msg["To"] = target
 
-    server.sendmail(me, target, msg.as_string())
+    try:
+        # server.starttls()
+        server.login(me, "ashu1234")  # Login into sender email address
+        server.sendmail(me, target, msg.as_string())
+        logger.info("Sent email for event: \'" + event + "\'")
+        server.quit()
+    except smtplib.SMTPException:
+        logger.exception("Failed to send email for event: \'" + event + "\'")
 
 
 if __name__ == "__main__":
-    server.starttls()
-    server.login(me, "ashu1234")  # Login into sender email address
     signal.signal(signal.SIGINT, sigint_handler)  # Register SIGINT handler
     main()
