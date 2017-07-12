@@ -98,7 +98,7 @@ def main():
             time.sleep(2)
             if miss > 1:
                 print "Rpm: 0"
-        if miss == 15:
+        if miss == 15 and not first:
             end_workout()
             first = True
 

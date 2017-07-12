@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="bec2cc56-b0dc-485d-a444-13003986d26c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Bike Code/nfc_code.py" afterPath="$PROJECT_DIR$/Bike Code/nfc_code.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Bike Code/rpm_sensor.py" afterPath="$PROJECT_DIR$/Bike Code/rpm_sensor.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,7 +18,7 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="nfc_code.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="nfc_code.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Bike Code/nfc_code.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="390">
@@ -30,11 +30,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="rpm_sensor.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="rpm_sensor.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Bike Code/rpm_sensor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
-              <caret line="62" column="18" lean-forward="false" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
+            <state relative-caret-position="117">
+              <caret line="99" column="16" lean-forward="false" selection-start-line="99" selection-start-column="16" selection-end-line="99" selection-end-column="16" />
               <folding>
                 <element signature="e#28#41#0" expanded="true" />
               </folding>
@@ -59,9 +59,9 @@
       <list>
         <option value="$PROJECT_DIR$/bike.sh" />
         <option value="$PROJECT_DIR$/Bike Code/serial.py" />
-        <option value="$PROJECT_DIR$/Bike Code/rpm_sensor.py" />
         <option value="$PROJECT_DIR$/Bike Code/alert.py" />
         <option value="$PROJECT_DIR$/Bike Code/nfc_code.py" />
+        <option value="$PROJECT_DIR$/Bike Code/rpm_sensor.py" />
       </list>
     </option>
   </component>
@@ -456,7 +456,14 @@
       <option name="project" value="LOCAL" />
       <updated>1499889961667</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Created the checkRPM request call to the backend code.">
+      <created>1499890003577</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1499890003577</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -953,16 +960,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Bike Code/rpm_sensor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="62" column="18" lean-forward="false" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
-          <folding>
-            <element signature="e#28#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Bike Code/serial.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -983,6 +980,16 @@
           <caret line="49" column="48" lean-forward="false" selection-start-line="49" selection-start-column="48" selection-end-line="49" selection-end-column="48" />
           <folding>
             <element signature="e#80#93#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Bike Code/rpm_sensor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="99" column="16" lean-forward="false" selection-start-line="99" selection-start-column="16" selection-end-line="99" selection-end-column="16" />
+          <folding>
+            <element signature="e#28#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
