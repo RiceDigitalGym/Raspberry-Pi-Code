@@ -1,5 +1,5 @@
 # Import required libraries
-import serial
+import serial_utils
 import RPi.GPIO as GPIO
 import time
 import json
@@ -56,7 +56,7 @@ def sensor_callback(channel):
 
     if 200 > rpm > 10:
         print "Rpm: " + str(int(rpm))
-        post_data = {"rpm": rpm, "serialNumber": serial.getserial()}
+        post_data = {"rpm": rpm, "serialNumber": serial_utils.getserial()}
         try:
             r = requests.post(url=API_ENDPOINT, data=post_data)
             print json.loads(r.text)["status"]
@@ -68,7 +68,7 @@ def sensor_callback(channel):
 
 def start_workout():
     try:
-        post_data = {"serialNumber": serial.getserial()}
+        post_data = {"serialNumber": serial_utils.getserial()}
         r = requests.post(url=API_START_WORKOUT, data=post_data)
         print "Start workout status: " + json.loads(r.text)["status"]
     except requests.exceptions.RequestException as error:
@@ -77,7 +77,7 @@ def start_workout():
 
 def end_workout():
     try:
-        post_data = {"serialNumber": serial.getserial()}
+        post_data = {"serialNumber": serial_utils.getserial()}
         r = requests.post(url=API_END_WORKOUT, data=post_data)
         print "End workout status: " + json.loads(r.text)["status"]
     except requests.exceptions.RequestException as error:

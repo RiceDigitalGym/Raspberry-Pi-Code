@@ -3,7 +3,7 @@ from email.mime.text import MIMEText
 import time
 import signal
 import json
-import serial
+import serial_utils
 import requests
 
 # API endpoint for testing connection with backend.
@@ -12,7 +12,7 @@ API_TEST_CONNECTION = "http://52.34.141.31:8000/bbb/test_connection"
 me = "digital.gym.alert@gmail.com"            # Email address for sender
 target = "hn9@rice.edu"                       # Email address for recipient
 server = smtplib.SMTP("smtp.gmail.com", 587)  # Initiate Email Server
-serial_num = serial.getserial()               # Serial Number of bike this code is running on
+serial_num = serial_utils.getserial()               # Serial Number of bike this code is running on
 # serial_num = "12345"
 
 global error  # Global variable indicating whether there is an error currently
