@@ -13,6 +13,7 @@ import requests
 import json
 import signal
 
+logger = util_functions.get_logger("NFC")
 
 global clf
 
@@ -23,6 +24,7 @@ def sigint_handler(*args):
     or when a SIGINT signal is sent to the program.
     """
     print "\nNFC Sensor Disconnected"
+    logger.info("NFC Sensor Disconnected")
     raise SystemExit  # Exit program after printing statement.
 
 
@@ -43,14 +45,18 @@ def main():
 
         # Extract the ID from the Tag object and convert it into an integer
         RFID = int("0x" + str(tag.identifier.encode("hex")), 16)
+        # TODO: Add formatting to log messages
+        logger.info("Tag scanned with RFID " + RFID)
         data = {"RFID": RFID, "serialNumber": util_functions.getserial()}
         try:
             r_process = requests.post(url=API_PROCESS_ENDPOINT, data=data)
             resp = json.loads(r_process.text)  # extracting response text
             print("Tag Status: %s" % resp["status"])
             r_checkRPM = requests.post(url=API_CHECKRPM_ENDPOINT, data=data)
+            logger.debug("Data for tag with RFID " + RFID + " sent")
         except requests.exceptions.RequestException as e:
             print "ERROR: " + str(e)
+            logger.exception("Data for Tag with RFID " + RFID + "could not be send")
 
 
 if __name__ == "__main__":
@@ -59,6 +65,7 @@ if __name__ == "__main__":
 
     clf = nfc.ContactlessFrontend('usb')
     print "NFC Sensor Connected"
+    logger.info("NFC Sensor Connected")
     main()
 
 

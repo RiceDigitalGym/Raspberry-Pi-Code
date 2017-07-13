@@ -23,6 +23,8 @@ API_ENDPOINT = "http://52.34.141.31:8000/bbb/bike"
 API_START_WORKOUT = "http://52.34.141.31:8000/bbb/start_workout"
 API_END_WORKOUT = "http://52.34.141.31:8000/bbb/end_workout"
 
+logger = util_functions.get_logger("RPM")
+
 
 def sigint_handler(*args):
     """
@@ -33,6 +35,7 @@ def sigint_handler(*args):
     if not first:   # If a workout already exists, end it before exiting.
         end_workout()
     print "\nRPM Sensor Disconnected"
+    logger.info("RPM Sensor Disconnected")
     raise SystemExit
 
 
@@ -55,15 +58,17 @@ def sensor_callback(channel):
 
     current_time = time.time()
 
-    rpm = rpm = (1 / (current_time - last_time)) * 60
+    rpm = (1 / (current_time - last_time)) * 60
 
     if 200 > rpm > 10:
         print "Rpm: " + str(int(rpm))
         post_data = {"rpm": rpm, "serialNumber": util_functions.getserial()}
         try:
             r = requests.post(url=API_ENDPOINT, data=post_data)
-            print json.loads(r.text)["status"]
+            print "RPM Status: " + json.loads(r.text)["status"]
+            logger.debug("RPM of " + rpm + " collected and sent to the server")
         except requests.exceptions.RequestException as error:
+            logger.exception("RPM data could not be sent to the server")
             print error
 
     last_time = current_time
@@ -77,7 +82,9 @@ def start_workout():
         post_data = {"serialNumber": util_functions.getserial()}
         r = requests.post(url=API_START_WORKOUT, data=post_data)
         print "Start workout status: " + json.loads(r.text)["status"]
+        logger.info("Start Workout request sent with status: " + json.loads(r.text)["status"])
     except requests.exceptions.RequestException as error:
+        logger.exception("Start workout request could not be sent to the server")
         print error
 
 
@@ -89,7 +96,9 @@ def end_workout():
         post_data = {"serialNumber": util_functions.getserial()}
         r = requests.post(url=API_END_WORKOUT, data=post_data)
         print "End workout status: " + json.loads(r.text)["status"]
+        logger.info("End Workout request sent with status: " + json.loads(r.text)["status"])
     except requests.exceptions.RequestException as error:
+        logger.exception("End workout request could not be sent to the server")
         print error
 
 
@@ -112,16 +121,17 @@ def main():
             first = True
 
 
-GPIO.setmode(GPIO.BCM)
-
-print("Setup of GPIO pin as Input for RPM Sensor")
-
-# Set switch GPIO as input
-
-GPIO.setup(27, GPIO.IN)
-GPIO.add_event_detect(27, GPIO.FALLING, callback=sensor_callback)
-
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, sigint_handler)  # Register SIGINT handler
+
+    GPIO.setmode(GPIO.BCM)
+
+    # Set switch GPIO as input
+    GPIO.setup(27, GPIO.IN)
+    GPIO.add_event_detect(27, GPIO.FALLING, callback=sensor_callback)
+
+    print("RPM Sensor Connected")
+    logger.info("RPM Sensor Connected")
+
     last_time = 0
     main()

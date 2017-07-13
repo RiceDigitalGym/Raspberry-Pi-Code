@@ -50,7 +50,8 @@ def main():
         time.sleep(10)  # Recheck connection with server every 10 seconds
         try:
             resp = requests.get(API_TEST_CONNECTION)  # Test Connection
-            print json.loads(resp.text)["status"]  # Should be "success" if connection established
+            # Should be "success" if connection established
+            print "Ping Status: " + json.loads(resp.text)["status"]
 
             logger.debug("Connection attempt to server successful")
 
