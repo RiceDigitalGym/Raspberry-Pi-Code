@@ -1,19 +1,22 @@
-# Import required libraries
-import serial_utils
+"""
+Code to compute the RPM of the bike, and send it to the server. Also handles session creation and end through
+pedalling.
+
+Authors:
+Aidan Curtis
+Hamza Nauman July 2017
+
+"""
+import util_functions
 import RPi.GPIO as GPIO
 import time
 import json
 import requests
 import signal
-import datetime
-import urllib
-import httplib
-import smtplib
-from email.mime.text import MIMEText
 
-global first
-global last_time
-global miss
+global first        # Boolean to indicate if next RPM will be the first of a new workout
+global last_time    # Time in seconds of the last time the pedal crossed the Hall Effect sensor
+global miss         # Integer to keep track of time since last RPM. Incremented by 1 every 2 seconds.
 
 # Define the API endpoint:
 API_ENDPOINT = "http://52.34.141.31:8000/bbb/bike"
@@ -27,7 +30,7 @@ def sigint_handler(*args):
     or when a SIGINT signal is sent to the program.
     """
     GPIO.cleanup()  # Clean up ports being used to prevent damage.
-    if not first:
+    if not first:   # If a workout already exists, end it before exiting.
         end_workout()
     print "\nRPM Sensor Disconnected"
     raise SystemExit
@@ -41,6 +44,7 @@ def sensor_callback(channel):
     global last_time
     global miss
 
+    # If its the first RPM of a new workout, create a new session
     if first:
         start_workout()
         first = False
@@ -55,7 +59,7 @@ def sensor_callback(channel):
 
     if 200 > rpm > 10:
         print "Rpm: " + str(int(rpm))
-        post_data = {"rpm": rpm, "serialNumber": serial_utils.getserial()}
+        post_data = {"rpm": rpm, "serialNumber": util_functions.getserial()}
         try:
             r = requests.post(url=API_ENDPOINT, data=post_data)
             print json.loads(r.text)["status"]
@@ -66,8 +70,11 @@ def sensor_callback(channel):
 
 
 def start_workout():
+    """
+    Sends a request to the backend to start a workout session on the current bike if one doesnt already exist.
+    """
     try:
-        post_data = {"serialNumber": serial_utils.getserial()}
+        post_data = {"serialNumber": util_functions.getserial()}
         r = requests.post(url=API_START_WORKOUT, data=post_data)
         print "Start workout status: " + json.loads(r.text)["status"]
     except requests.exceptions.RequestException as error:
@@ -75,8 +82,11 @@ def start_workout():
 
 
 def end_workout():
+    """
+    Sends a request to the backend to the current workout session on the current bike if one exists.
+    """
     try:
-        post_data = {"serialNumber": serial_utils.getserial()}
+        post_data = {"serialNumber": util_functions.getserial()}
         r = requests.post(url=API_END_WORKOUT, data=post_data)
         print "End workout status: " + json.loads(r.text)["status"]
     except requests.exceptions.RequestException as error:
@@ -87,17 +97,17 @@ def main():
     global first
     global miss
 
-    first = True
+    first = True  # No workout exists when code starts
     miss = 0
 
-    # This following try catch is for positing zeros if the hall effect is not triggered
+    #  Keep printing a zero RPM every 2 seconds of inactivity for 30 seconds when session is active. Then end session.
     while True:
         miss += 1
         if miss < 15:
             time.sleep(2)
             if miss > 1:
                 print "Rpm: 0"
-        if miss == 15 and not first:
+        if miss == 15 and not first:  # If session exists and 30 seconds have elapsed.
             end_workout()
             first = True
 

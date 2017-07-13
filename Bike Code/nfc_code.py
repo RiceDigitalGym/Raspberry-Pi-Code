@@ -1,18 +1,20 @@
 """
-Code to read RFID Tags for Rasp Pi
+Code to read RFID Tags for Raspberry Pi and send them to the database.
+
+Authors:
+Aidan Curtis
 Carl Henderson Feb 2017
-hi prithvi1
+Hamza Nauman   June 2017
 """
 
-import serial_utils
+import util_functions
 import nfc
 import requests
 import json
 import signal
-import urllib
-import httplib
-import time
-import datetime
+
+
+global clf
 
 
 def sigint_handler(*args):
@@ -28,28 +30,36 @@ def connected(tag):
     print ("\nTag Name: " + str(tag))
     return False
 
-clf = nfc.ContactlessFrontend('usb')
-print "NFC Sensor Connected"
 
-# Register the SIGINT handler for when CTRL-C is pressed by user
-signal.signal(signal.SIGINT, sigint_handler)
+def main():
 
-while True:
-    API_PROCESS = "http://52.34.141.31:8000/bbb/process_tag"
-    API_CHECK = "http://52.34.141.31:8000/bbb/check_rpm"
+    global clf
 
-    tag = clf.connect(rdwr={'on-connect': connected})
+    while True:
+        API_PROCESS_ENDPOINT = "http://52.34.141.31:8000/bbb/process_tag"
+        API_CHECKRPM_ENDPOINT = "http://52.34.141.31:8000/bbb/check_rpm"
 
-    # Extract the ID from the Tag object and convert it into an integer
-    RFID = int("0x" + str(tag.identifier.encode("hex")), 16)
-    data = {"RFID": RFID, "serialNumber": serial_utils.getserial()}
-    try:
-        r_process = requests.post(url=API_PROCESS, data=data)
-        resp = json.loads(r_process.text)  # extracting response text
-        print("Tag Status: %s" % resp["status"])
-        r_checkRPM = requests.post(url=API_CHECK, data=data)
-    except requests.exceptions.RequestException as e:
-        print "ERROR: " + str(e)
+        tag = clf.connect(rdwr={'on-connect': connected})
+
+        # Extract the ID from the Tag object and convert it into an integer
+        RFID = int("0x" + str(tag.identifier.encode("hex")), 16)
+        data = {"RFID": RFID, "serialNumber": util_functions.getserial()}
+        try:
+            r_process = requests.post(url=API_PROCESS_ENDPOINT, data=data)
+            resp = json.loads(r_process.text)  # extracting response text
+            print("Tag Status: %s" % resp["status"])
+            r_checkRPM = requests.post(url=API_CHECKRPM_ENDPOINT, data=data)
+        except requests.exceptions.RequestException as e:
+            print "ERROR: " + str(e)
+
+
+if __name__ == "__main__":
+    # Register the SIGINT handler for when CTRL-C is pressed by user
+    signal.signal(signal.SIGINT, sigint_handler)
+
+    clf = nfc.ContactlessFrontend('usb')
+    print "NFC Sensor Connected"
+    main()
 
 
 

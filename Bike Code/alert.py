@@ -1,11 +1,19 @@
+"""
+Code to periodically check connection with the backend server, and send emails to notify when the connection is
+down or up again.
+
+Authors:
+Hamza Nauman July 2017
+
+"""
+
 import smtplib
 from email.mime.text import MIMEText
 import time
 import signal
 import json
-import serial_utils
+import util_functions
 import requests
-# import logging
 
 # API endpoint for testing connection with backend.
 API_TEST_CONNECTION = "http://52.34.141.31:8000/bbb/test_connection"
@@ -13,7 +21,7 @@ API_TEST_CONNECTION = "http://52.34.141.31:8000/bbb/test_connection"
 me = "digital.gym.alert@gmail.com"            # Email address for sender
 target = "hn9@rice.edu"                       # Email address for recipient
 server = smtplib.SMTP("smtp.gmail.com", 587)  # Initiate Email Server
-logger = serial_utils.get_logger("Alert")
+logger = util_functions.get_logger("Alert")
 # serial_num = util_functions.getserial()               # Serial Number of bike this code is running on
 serial_num = "12345"
 
@@ -82,7 +90,7 @@ def send_email(event):
     msg["To"] = target
 
     try:
-        # server.starttls()
+        server.starttls()
         server.login(me, "ashu1234")  # Login into sender email address
         server.sendmail(me, target, msg.as_string())
         logger.info("Sent email for event: \'" + event + "\'")
