@@ -112,10 +112,9 @@ def main():
     #  Keep printing a zero RPM every 2 seconds of inactivity for 30 seconds when session is active. Then end session.
     while True:
         miss += 1
-        if miss < 15:
-            time.sleep(2)
-            if miss > 1:
-                print "Rpm: 0"
+        time.sleep(2)
+        if 1 < miss < 15:
+            print "Rpm: 0"
         if miss == 15 and not first:  # If session exists and 30 seconds have elapsed.
             end_workout()
             first = True
