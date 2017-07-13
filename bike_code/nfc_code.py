@@ -5,6 +5,7 @@ Authors:
 Aidan Curtis
 Carl Henderson Feb 2017
 Hamza Nauman   June 2017
+Titus Deng     July 2017
 """
 
 import util_functions
