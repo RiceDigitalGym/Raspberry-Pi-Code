@@ -47,17 +47,17 @@ def main():
         # Extract the ID from the Tag object and convert it into an integer
         RFID = int("0x" + str(tag.identifier.encode("hex")), 16)
         # TODO: Add formatting to log messages
-        logger.info("Tag scanned with RFID " + RFID)
+        logger.info("Tag scanned with RFID " + str(RFID))
         data = {"RFID": RFID, "serialNumber": util_functions.getserial()}
         try:
             r_process = requests.post(url=API_PROCESS_ENDPOINT, data=data)
             resp = json.loads(r_process.text)  # extracting response text
             print("Tag Status: %s" % resp["status"])
-            r_checkRPM = requests.post(url=API_CHECKRPM_ENDPOINT, data=data)
-            logger.debug("Data for tag with RFID " + RFID + " sent")
+            requests.post(url=API_CHECKRPM_ENDPOINT, data=data)
+            logger.debug("Data for tag with RFID " + str(RFID) + " sent")
         except requests.exceptions.RequestException as e:
             print "ERROR: " + str(e)
-            logger.exception("Data for Tag with RFID " + RFID + "could not be send")
+            logger.exception("Data for Tag with RFID " + str(RFID) + "could not be send")
 
 
 if __name__ == "__main__":
