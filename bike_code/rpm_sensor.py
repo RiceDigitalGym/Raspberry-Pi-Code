@@ -66,7 +66,7 @@ def sensor_callback(channel):
         try:
             r = requests.post(url=API_ENDPOINT, data=post_data)
             print "RPM Status: " + json.loads(r.text)["status"]
-            logger.debug("RPM of " + rpm + " collected and sent to the server")
+            logger.debug("RPM of " + str(rpm) + " collected and sent to the server")
         except requests.exceptions.RequestException as error:
             logger.exception("RPM data could not be sent to the server")
             print error
