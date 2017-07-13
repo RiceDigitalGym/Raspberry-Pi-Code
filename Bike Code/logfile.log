@@ -1880,3 +1880,64 @@ SMTPException: SMTP AUTH extension not supported by server.
 12 Jul 2017 07:04:37 PM - Alert - DEBUG - Connection attempt to server successful
 12 Jul 2017 07:04:48 PM - Alert - DEBUG - Connection attempt to server successful
 12 Jul 2017 07:04:58 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:12:00 PM - Alert - DEBUG - Connection attempt to server failed
+12 Jul 2017 07:12:00 PM - Alert - ERROR - No Connection to server
+12 Jul 2017 07:12:00 PM - Alert - ERROR - Failed to send email for event: 'Failed'
+Traceback (most recent call last):
+  File "/Users/hamzanauman/Desktop/Raspberry-Pi-Code/Bike Code/alert.py", line 86, in send_email
+    msg = MIMEText(data)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/smtplib.py", line 585, in login
+    raise SMTPException("SMTP AUTH extension not supported by server.")
+SMTPException: SMTP AUTH extension not supported by server.
+12 Jul 2017 07:12:11 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:12:11 PM - Alert - INFO - Connection to server restored
+12 Jul 2017 07:12:11 PM - Alert - ERROR - Failed to send email for event: 'Restored'
+Traceback (most recent call last):
+  File "/Users/hamzanauman/Desktop/Raspberry-Pi-Code/Bike Code/alert.py", line 86, in send_email
+    msg = MIMEText(data)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/smtplib.py", line 585, in login
+    raise SMTPException("SMTP AUTH extension not supported by server.")
+SMTPException: SMTP AUTH extension not supported by server.
+12 Jul 2017 07:12:21 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:12:31 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:12:41 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:12:51 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:13:01 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:13:11 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:13:22 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:13:32 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:13:42 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:13:52 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:14:02 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:14:12 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:14:22 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:14:33 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:14:43 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:14:53 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:15:03 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:15:13 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:15:23 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:15:33 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:15:44 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:15:54 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:16:04 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:16:14 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:16:24 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:16:34 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:16:44 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:16:55 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:17:05 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:17:15 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:17:25 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:17:35 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:17:45 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:17:55 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:18:06 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:18:16 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:18:26 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:18:36 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:18:46 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:18:56 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:19:06 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:19:17 PM - Alert - DEBUG - Connection attempt to server successful
+12 Jul 2017 07:19:27 PM - Alert - DEBUG - Connection attempt to server successful
