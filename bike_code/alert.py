@@ -22,8 +22,8 @@ me = "digital.gym.alert@gmail.com"            # Email address for sender
 target = "hn9@rice.edu"                       # Email address for recipient
 server = smtplib.SMTP("smtp.gmail.com", 587)  # Initiate Email Server
 logger = util_functions.get_logger("Alert")
-# serial_num = util_functions.getserial()               # Serial Number of bike this code is running on
-serial_num = "12345"
+serial_num = util_functions.getserial()               # Serial Number of bike this code is running on
+# serial_num = "12345"
 
 global error  # Global variable indicating whether there is an error currently
 

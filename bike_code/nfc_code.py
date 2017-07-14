@@ -65,7 +65,6 @@ def main():
 
 
 if __name__ == "__main__":
-
     try:
         # Register the SIGINT handler for when CTRL-C is pressed by user
         signal.signal(signal.SIGINT, sigint_handler)
