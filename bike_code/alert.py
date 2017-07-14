@@ -47,7 +47,7 @@ def main():
     logger.info("Connection Status Alert Activated")
 
     while True:
-        time.sleep(10)  # Recheck connection with server every 10 seconds
+        time.sleep(60)  # Recheck connection with server every 10 seconds
         try:
             resp = requests.get(API_TEST_CONNECTION)  # Test Connection
             # Should be "success" if connection established
@@ -107,4 +107,5 @@ if __name__ == "__main__":
     except:
         logger.exception("Could not configure SIGINT handler")
         raise
+
     main()
