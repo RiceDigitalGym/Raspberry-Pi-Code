@@ -101,5 +101,10 @@ def send_email(event):
 
 
 if __name__ == "__main__":
-    signal.signal(signal.SIGINT, sigint_handler)  # Register SIGINT handler
+    try:
+        # Register the SIGINT handler for when CTRL-C is pressed by user
+        signal.signal(signal.SIGINT, sigint_handler)
+    except:
+        logger.exception("Could not configure SIGINT handler")
+        raise
     main()

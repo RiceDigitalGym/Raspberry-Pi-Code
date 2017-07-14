@@ -14,6 +14,9 @@ import requests
 import json
 import signal
 
+API_PROCESS_ENDPOINT = "http://52.34.141.31:8000/bbb/process_tag"
+API_CHECKRPM_ENDPOINT = "http://52.34.141.31:8000/bbb/check_rpm"
+
 logger = util_functions.get_logger("NFC")
 
 global clf
@@ -39,10 +42,11 @@ def main():
     global clf
 
     while True:
-        API_PROCESS_ENDPOINT = "http://52.34.141.31:8000/bbb/process_tag"
-        API_CHECKRPM_ENDPOINT = "http://52.34.141.31:8000/bbb/check_rpm"
-
         tag = clf.connect(rdwr={'on-connect': connected})
+
+        if tag is None or tag is False:
+            logger.error("Tag could not be connected to properly")
+            continue
 
         # Extract the ID from the Tag object and convert it into an integer
         RFID = int("0x" + str(tag.identifier.encode("hex")), 16)
@@ -61,12 +65,22 @@ def main():
 
 
 if __name__ == "__main__":
-    # Register the SIGINT handler for when CTRL-C is pressed by user
-    signal.signal(signal.SIGINT, sigint_handler)
 
-    clf = nfc.ContactlessFrontend('usb')
-    print "NFC Sensor Connected"
-    logger.info("NFC Sensor Connected")
+    try:
+        # Register the SIGINT handler for when CTRL-C is pressed by user
+        signal.signal(signal.SIGINT, sigint_handler)
+    except:
+        logger.exception("Could not configure SIGINT handler")
+        raise
+
+    try:
+        clf = nfc.ContactlessFrontend('usb')
+        print "NFC Sensor Connected"
+        logger.info("NFC Sensor Connected")
+    except IOError:
+        logger.exception("Could not connect to NFC Sensor")
+        raise
+
     main()
 
 

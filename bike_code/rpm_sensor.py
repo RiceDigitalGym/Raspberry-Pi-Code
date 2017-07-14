@@ -121,16 +121,23 @@ def main():
 
 
 if __name__ == "__main__":
-    signal.signal(signal.SIGINT, sigint_handler)  # Register SIGINT handler
-
-    GPIO.setmode(GPIO.BCM)
-
-    # Set switch GPIO as input
-    GPIO.setup(27, GPIO.IN)
-    GPIO.add_event_detect(27, GPIO.FALLING, callback=sensor_callback)
-
-    print("RPM Sensor Connected")
-    logger.info("RPM Sensor Connected")
+    try:
+        # Register the SIGINT handler for when CTRL-C is pressed by user
+        signal.signal(signal.SIGINT, sigint_handler)
+    except:
+        logger.exception("Could not configure SIGINT handler")
+        raise
+        
+    try:
+        GPIO.setmode(GPIO.BCM)
+        # Set switch GPIO as input
+        GPIO.setup(27, GPIO.IN)
+        GPIO.add_event_detect(27, GPIO.FALLING, callback=sensor_callback)
+        print("RPM Sensor Connected")
+        logger.info("RPM Sensor Connected")
+    except:
+        logger.exception("Could not configure RPM Sensor properly")
+        raise
 
     last_time = 0
     main()
