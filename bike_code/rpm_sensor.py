@@ -24,6 +24,7 @@ API_START_WORKOUT = "http://52.34.141.31:8000/bbb/start_workout"
 API_END_WORKOUT = "http://52.34.141.31:8000/bbb/end_workout"
 
 logger = util_functions.get_logger("RPM")
+serial = util_functions.getserial()
 
 
 def sigint_handler(*args):
@@ -62,7 +63,7 @@ def sensor_callback(channel):
 
     if 200 > rpm > 10:
         print "Rpm: " + str(int(rpm))
-        post_data = {"rpm": rpm, "serialNumber": util_functions.getserial()}
+        post_data = {"rpm": rpm, "serialNumber": serial}
         try:
             r = requests.post(url=API_ENDPOINT, data=post_data)
             print "RPM Status: " + json.loads(r.text)["status"]
@@ -79,7 +80,7 @@ def start_workout():
     Sends a request to the backend to start a workout session on the current bike if one doesnt already exist.
     """
     try:
-        post_data = {"serialNumber": util_functions.getserial()}
+        post_data = {"serialNumber": serial}
         r = requests.post(url=API_START_WORKOUT, data=post_data)
         print "Start workout status: " + json.loads(r.text)["status"]
         logger.info("Start Workout request sent with status: " + json.loads(r.text)["status"])
@@ -93,7 +94,7 @@ def end_workout():
     Sends a request to the backend to the current workout session on the current bike if one exists.
     """
     try:
-        post_data = {"serialNumber": util_functions.getserial()}
+        post_data = {"serialNumber": serial}
         r = requests.post(url=API_END_WORKOUT, data=post_data)
         print "End workout status: " + json.loads(r.text)["status"]
         logger.info("End Workout request sent with status: " + json.loads(r.text)["status"])

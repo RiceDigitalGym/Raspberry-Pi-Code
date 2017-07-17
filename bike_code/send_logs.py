@@ -9,8 +9,8 @@ from email.mime.text import MIMEText
 me = "digital.gym.alert@gmail.com"            # Email address for sender
 target = "hn9@rice.edu"                       # Email address for recipient
 server = smtplib.SMTP("smtp.gmail.com", 587)  # Initiate Email Server
-# serial_num = util_functions.getserial()               # Serial Number of bike this code is running on
-serial_num = "12345"
+serial_num = util_functions.getserial()               # Serial Number of bike this code is running on
+# serial_num = "12345"
 f = "../logfile.log"
 
 
@@ -33,9 +33,9 @@ def send_now():
     with open(f, "rb") as fil:
         part = MIMEApplication(
             fil.read(),
-            Name=basename(f)
+            Name=(str(serial_num) + "-" + basename(f))
         )
-        part['Content-Disposition'] = 'attachment; filename="%s"' % basename(f)
+        part['Content-Disposition'] = 'attachment; filename="%s"' % (str(serial_num) + "-" +basename(f))
         msg.attach(part)
 
     server.starttls()

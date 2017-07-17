@@ -18,6 +18,7 @@ API_PROCESS_ENDPOINT = "http://52.34.141.31:8000/bbb/process_tag"
 API_CHECKRPM_ENDPOINT = "http://52.34.141.31:8000/bbb/check_rpm"
 
 logger = util_functions.get_logger("NFC")
+serial = util_functions.getserial()
 
 global clf
 
@@ -52,7 +53,7 @@ def main():
         RFID = int("0x" + str(tag.identifier.encode("hex")), 16)
         # TODO: Add formatting to log messages
         logger.info("Tag scanned with RFID " + str(RFID))
-        data = {"RFID": RFID, "serialNumber": util_functions.getserial()}
+        data = {"RFID": RFID, "serialNumber": serial}
         try:
             r_process = requests.post(url=API_PROCESS_ENDPOINT, data=data)
             resp = json.loads(r_process.text)  # extracting response text
