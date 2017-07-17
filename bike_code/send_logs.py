@@ -11,7 +11,7 @@ target = "hn9@rice.edu"                       # Email address for recipient
 server = smtplib.SMTP("smtp.gmail.com", 587)  # Initiate Email Server
 serial_num = util_functions.getserial()               # Serial Number of bike this code is running on
 # serial_num = "12345"
-f = "../logfile.log"
+f = "./logfile.log"
 
 
 def send_now():
