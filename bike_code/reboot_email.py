@@ -8,7 +8,7 @@ import util_functions
 from email.mime.text import MIMEText
 
 me = "digital.gym.alert@gmail.com"            # Email address for sender
-target = "haleyko@rice.edu"                       # Email address for recipient
+target = "rice.sensor@gmail.com"                       # Email address for recipient
 server = smtplib.SMTP("smtp.gmail.com", 587)  # Initiate Email Server
 logger = util_functions.get_logger("Alert")
 serial_num = util_functions.getserial()               # Serial Number of bike this code is running on
