@@ -2,3 +2,8 @@
 13 Jul 2017 03:00:13 AM - Alert - ERROR - No Connection to server
 13 Jul 2017 03:00:14 AM - Alert - INFO - Sent email for event: 'Failed'
 13 Jul 2017 03:00:47 AM - Alert - INFO - Connection Status Alert Stopped
+18 Jul 2017 04:48:31 PM - Alert - INFO - Connection Status Alert Activated
+18 Jul 2017 04:49:17 PM - Alert - INFO - Connection Status Alert Stopped
+18 Jul 2017 04:53:36 PM - Alert - INFO - Sent email for event: 'Rebooted'
+18 Jul 2017 04:56:41 PM - Alert - INFO - Sent email for event: 'Reboot'
+18 Jul 2017 05:01:02 PM - Alert - INFO - Sent email for event: 'Reboot'
