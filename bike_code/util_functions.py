@@ -14,7 +14,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 
 me = "digital.gym.alert@gmail.com"            # Email address for sender
-target = "hn9@rice.edu"              # Email address for recipient
+target = "rice.sensor@gmail.com"              # Email address for recipient
 
 
 def getserial():
