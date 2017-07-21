@@ -6,7 +6,15 @@ Authors:
 Hamza Nauman
 Titus Deng
 """
+import smtplib
 import logging
+import time
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.application import MIMEApplication
+
+me = "digital.gym.alert@gmail.com"            # Email address for sender
+target = "hn9@rice.edu"              # Email address for recipient
 
 
 def getserial():
@@ -52,6 +60,55 @@ def get_logger(name):
     logger.addHandler(handler)
 
     return logger
+
+
+def send_event_email(event, subject, logger=None, attachment=None, attachment_name=None):
+    """
+    Sends an email to the target email specifying the time and date of an event.
+    An attachment can also optionally be sent.
+    :param event: Name of event that has occurred.
+    :param subject: Subject of email to send.
+    :param logger: Optional logger object to log the success/failure of sending the email.
+    :param attachment: Path of the optional attachment file.
+    :param attachment_name: Name of the optional attachment file that should be shown in the email
+    """
+    now_date = time.strftime("%x")  # Current Date
+    now_time = time.strftime("%X")  # Current Time
+
+    # Main text of email.
+    text = event + " Date: " + now_date + "\n" + \
+           event + " Time: " + now_time + "\n"
+
+    msg = MIMEMultipart()
+
+    msg["Subject"] = subject
+    msg["From"] = me
+    msg["To"] = target
+
+    msg.attach(MIMEText(text))
+
+    if attachment is not None and attachment_name is not None:
+        with open(attachment, "rb") as fil:
+            part = MIMEApplication(
+                fil.read(),
+                Name=attachment_name
+            )
+            part['Content-Disposition'] = 'attachment; filename="%s"' % attachment_name
+            msg.attach(part)
+
+    try:
+        server = smtplib.SMTP("smtp.gmail.com", 587)  # Initiate Email Server
+        server.starttls()
+        server.login(me, "ashu1234")  # Login into sender email address
+        server.sendmail(me, target, msg.as_string())
+        if logger is not None:
+            logger.info("Successfully sent email for event: \'" + event + "\'")
+        print "Sent email for event: \'" + event + "\'"
+        server.quit()
+    except smtplib.SMTPException:
+        if logger is not None:
+            logger.exception("Failed to send email for event: \'" + event + "\'")
+        print "Failed to send email for event: \'" + event + "\'"
 
 
 # If this file is called by itself (not imported), it will print of the serial number of the pi.

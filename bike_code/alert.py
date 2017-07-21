@@ -18,11 +18,8 @@ import requests
 # API endpoint for testing connection with backend.
 API_TEST_CONNECTION = "http://52.34.141.31:8000/bbb/test_connection"
 
-me = "digital.gym.alert@gmail.com"            # Email address for sender
-target = "hn9@rice.edu"                       # Email address for recipient
-server = smtplib.SMTP("smtp.gmail.com", 587)  # Initiate Email Server
 logger = util_functions.get_logger("Alert")
-serial_num = util_functions.getserial()               # Serial Number of bike this code is running on
+serial_num = str(util_functions.getserial())          # Serial Number of bike this code is running on
 # serial_num = "12345"
 
 global error  # Global variable indicating whether there is an error currently
@@ -60,7 +57,7 @@ def main():
             if error:
                 error = False
                 logger.info("Connection to server restored")
-                send_email("Restored")
+                send_alert_email("Restored")
 
         except requests.exceptions.RequestException as e:
             print e
@@ -70,34 +67,18 @@ def main():
             if not error:
                 error = True
                 logger.error("No Connection to server")
-                send_email("Failed")
+                send_alert_email("Failed")
 
 
-def send_email(event):
+def send_alert_email(status):
     """
-    Sends an email to the target email specifying the time and date of "event".
+    Sends an email to the target email specifying the time and date of failure/success.
     """
-    now_date = time.strftime("%x")  # Current Date
-    now_time = time.strftime("%X")  # Current Time
-
-    # Main text of email.
-    data = event + " Date: " + now_date + "\n" + \
-        event + " Time: " + now_time + "\n"
-
-    msg = MIMEText(data)
-
-    msg["Subject"] = "Connection " + event + " on Bike Serial #" + str(serial_num)
-    msg["From"] = me
-    msg["To"] = target
-
-    try:
-        server.starttls()
-        server.login(me, "ashu1234")  # Login into sender email address
-        server.sendmail(me, target, msg.as_string())
-        logger.info("Sent email for event: \'" + event + "\'")
-        server.quit()
-    except smtplib.SMTPException:
-        logger.exception("Failed to send email for event: \'" + event + "\'")
+    util_functions.send_event_email(
+        status,
+        "Connection " + status + " on Bike Serial #" + serial_num,
+        logger
+    )
 
 
 if __name__ == "__main__":
