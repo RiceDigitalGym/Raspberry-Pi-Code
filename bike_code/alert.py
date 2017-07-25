@@ -6,7 +6,6 @@ Authors:
 Hamza Nauman July 2017
 
 """
-
 import smtplib
 from email.mime.text import MIMEText
 import time
@@ -14,6 +13,7 @@ import signal
 import json
 import util_functions
 import requests
+import subprocess
 
 # API endpoint for testing connection with backend.
 API_TEST_CONNECTION = "http://52.34.141.31:8000/bbb/test_connection"
@@ -69,7 +69,10 @@ def main():
             if not error:
                 error = True
                 logger.error("No Connection to server")
+                subprocess.call("./reconnect_wifi.sh")
+                time.sleep(80)
                 send_alert_email("Failed")
+                
 
 
 def send_alert_email(status):
