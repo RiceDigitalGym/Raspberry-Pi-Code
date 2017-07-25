@@ -43,10 +43,12 @@ def main():
     print "Alert Started"
     logger.info("Connection Status Alert Activated")
 
+    post_data = {"serialNumber": serial_num}
+
     while True:
         time.sleep(60)  # Recheck connection with server every 10 seconds
         try:
-            resp = requests.get(API_TEST_CONNECTION)  # Test Connection
+            resp = requests.post(url=API_TEST_CONNECTION, data=post_data)  # Test Connection
             # Should be "success" if connection established
             print "Ping Status: " + json.loads(resp.text)["status"]
 
