@@ -69,7 +69,7 @@ def sensor_callback(channel):
             print "RPM Status: " + json.loads(r.text)["status"]
             logger.debug("RPM of " + str(rpm) + " collected and sent to the server")
         except requests.exceptions.RequestException as error:
-            logger.exception("RPM data could not be sent to the server")
+            logger.error("RPM data could not be sent to the server")
             print error
 
     last_time = current_time

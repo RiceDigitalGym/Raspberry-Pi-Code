@@ -74,7 +74,6 @@ def main():
                 send_alert_email("Failed")
                 
 
-
 def send_alert_email(status):
     """
     Sends an email to the target email specifying the time and date of failure/success.
