@@ -9,6 +9,7 @@ Titus Deng
 import smtplib
 import logging
 import time
+import socket
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
@@ -105,7 +106,7 @@ def send_event_email(event, subject, logger=None, attachment=None, attachment_na
             logger.info("Successfully sent email for event: \'" + event + "\'")
         print "Sent email for event: \'" + event + "\'"
         server.quit()
-    except smtplib.SMTPException:
+    except:
         if logger is not None:
             logger.exception("Failed to send email for event: \'" + event + "\'")
         print "Failed to send email for event: \'" + event + "\'"
