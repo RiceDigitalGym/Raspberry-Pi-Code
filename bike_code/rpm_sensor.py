@@ -66,8 +66,9 @@ def sensor_callback(channel):
         post_data = {"rpm": rpm, "serialNumber": serial}
         try:
             r = requests.post(url=API_ENDPOINT, data=post_data)
-            print "RPM Status: " + json.loads(r.text)["status"]
-            logger.debug("RPM of " + str(rpm) + " collected and sent to the server")
+            status = json.loads(r.text)["status"]
+            print "RPM Status: " + status
+            logger.debug("RPM of " + str(rpm) + " sent to the server with status: " + status)
         except requests.exceptions.RequestException as error:
             logger.error("RPM data could not be sent to the server")
             print error
@@ -82,8 +83,9 @@ def start_workout():
     try:
         post_data = {"serialNumber": serial}
         r = requests.post(url=API_START_WORKOUT, data=post_data)
-        print "Start workout status: " + json.loads(r.text)["status"]
-        logger.info("Start Workout request sent with status: " + json.loads(r.text)["status"])
+        status = json.loads(r.text)["status"]
+        print "Start workout status: " + status
+        logger.info("Start Workout request sent with status: " + status)
     except requests.exceptions.RequestException as error:
         logger.exception("Start workout request could not be sent to the server")
         print error
@@ -96,8 +98,9 @@ def end_workout():
     try:
         post_data = {"serialNumber": serial}
         r = requests.post(url=API_END_WORKOUT, data=post_data)
-        print "End workout status: " + json.loads(r.text)["status"]
-        logger.info("End Workout request sent with status: " + json.loads(r.text)["status"])
+        status = json.loads(r.text)["status"]
+        print "End workout status: " + status
+        logger.info("End Workout request sent with status: " + status)
     except requests.exceptions.RequestException as error:
         logger.exception("End workout request could not be sent to the server")
         print error

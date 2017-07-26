@@ -55,11 +55,11 @@ def main():
         logger.info("Tag scanned with RFID " + str(RFID))
         data = {"RFID": RFID, "serialNumber": serial}
         try:
-            r_process = requests.post(url=API_PROCESS_ENDPOINT, data=data)
-            resp = json.loads(r_process.text)  # extracting response text
-            print("Tag Status: %s" % resp["status"])
+            r = requests.post(url=API_PROCESS_ENDPOINT, data=data)
+            status = json.loads(r.text)["status"]  # extracting response status
+            print("Tag Status: %s" % status)
             requests.post(url=API_CHECKRPM_ENDPOINT, data=data)
-            logger.debug("Data for tag with RFID " + str(RFID) + " sent")
+            logger.debug("Data for tag with RFID " + str(RFID) + " sent with status: " + status)
         except requests.exceptions.RequestException as e:
             print "ERROR: " + str(e)
             logger.exception("Data for Tag with RFID " + str(RFID) + "could not be send")

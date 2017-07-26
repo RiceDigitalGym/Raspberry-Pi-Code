@@ -31,8 +31,9 @@ def send_reboot_request():
     post_data = {"serialNumber": serial_num}
     try:
         resp = requests.post(url=API_REBOOT, data=post_data)
-        print "Reboot Status: " + json.loads(resp.text)["status"]
-        logger.info("Reboot request sent to the server")
+        status = json.loads(resp.text)["status"]
+        print "Reboot Status: " + status
+        logger.info("Reboot request sent to the server with status: " + status)
     except requests.exceptions.RequestException:
         logger.error("Reboot request failed to send to the server")
 
