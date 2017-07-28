@@ -51,7 +51,6 @@ def sensor_callback(channel):
     # If its the first RPM of a new workout, create a new session
     if first:
         start_workout()
-        first = False
 
     miss = 0
     if not last_time:
@@ -80,9 +79,11 @@ def start_workout():
     """
     Sends a request to the backend to start a workout session on the current bike if one doesnt already exist.
     """
+    global first
     try:
         post_data = {"serialNumber": serial}
         r = requests.post(url=API_START_WORKOUT, data=post_data)
+        first = False
         status = json.loads(r.text)["status"]
         print "Start workout status: " + status
         logger.info("Start Workout request sent with status: " + status)
@@ -95,15 +96,20 @@ def end_workout():
     """
     Sends a request to the backend to the current workout session on the current bike if one exists.
     """
+    global first
+    global miss
+
     try:
         post_data = {"serialNumber": serial}
         r = requests.post(url=API_END_WORKOUT, data=post_data)
+        first = True
         status = json.loads(r.text)["status"]
         print "End workout status: " + status
         logger.info("End Workout request sent with status: " + status)
     except requests.exceptions.RequestException as error:
         logger.exception("End workout request could not be sent to the server")
         print error
+        miss -= 1
 
 
 def main():
@@ -121,7 +127,6 @@ def main():
             print "Rpm: 0"
         if miss == 15 and not first:  # If session exists and 30 seconds have elapsed.
             end_workout()
-            first = True
 
 
 if __name__ == "__main__":

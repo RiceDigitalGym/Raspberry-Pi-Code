@@ -70,7 +70,7 @@ def main():
                 logger.error("No Connection to server")
                 try:
                     subprocess.call(["./bike_code/reconnect_wifi.sh"])
-                    time.sleep(80)
+                    time.sleep(120)
                 except:
                     logger.exception("Failed to restart WIFI")
                     raise
