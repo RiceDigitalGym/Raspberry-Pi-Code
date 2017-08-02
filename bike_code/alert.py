@@ -70,6 +70,9 @@ def main():
             logger.debug("Connection attempt to server failed")
             # If there wasn't previously an error, create it and send an email signifying that
             # the connection with the server has failed.
+            if num_atmp >= 4 :
+                num_atmp = 0
+                subprocess.call(["./bike_code/reboot.sh"])
             if not error:
                 error = True
                 logger.error("No Connection to server")
@@ -81,9 +84,7 @@ def main():
                     logger.exception("Failed to restart WIFI")
                     raise
                 send_alert_email("Failed")
-            if num_atmp >= 10 :
-                num_atmp = 0
-                subprocess.call(["./bike_code/reboot.sh"])
+            
 
 def send_alert_email(status):
     """
