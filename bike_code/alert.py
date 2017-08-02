@@ -22,6 +22,8 @@ logger = util_functions.get_logger("Alert")
 serial_num = str(util_functions.getserial())          # Serial Number of bike this code is running on
 # serial_num = "12345"
 
+global num_atmp    # Count the number of attemps the pi tries to restore wifi connection
+
 global error  # Global variable indicating whether there is an error currently
 
 
@@ -39,6 +41,8 @@ def main():
     global error
 
     error = False  # No error initially
+
+    num_atmp = 0  # No attempt initially
 
     print "Alert Started"
     logger.info("Connection Status Alert Activated")
@@ -59,6 +63,7 @@ def main():
                 error = False
                 logger.info("Connection to server restored")
                 send_alert_email("Restored")
+                num_atmp = 0
 
         except requests.exceptions.RequestException as e:
             print e
@@ -71,11 +76,14 @@ def main():
                 try:
                     subprocess.call(["./bike_code/reconnect_wifi.sh"])
                     time.sleep(120)
+                    num_atmp += 1
                 except:
                     logger.exception("Failed to restart WIFI")
                     raise
                 send_alert_email("Failed")
-                
+            if num_atmp >= 10 :
+                num_atmp = 0
+                subprocess.call(["./bike_code/reboot.sh"])
 
 def send_alert_email(status):
     """
