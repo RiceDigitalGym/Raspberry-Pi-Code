@@ -37,12 +37,6 @@ class LocalShelve(object):
     def end_session(self):
         self.db.close()
 
-a = LocalShelve(os.path.join('queue', 'test2.db'))
-a.add_entry({'serialNumber': 12345, 'status': 'alive', 'rpm': 90, 'RFID': 0x90})
-a.add_entry({'serialNumber': 12345, 'status': 'alive', 'rpm': 56, 'RFID': 0x90})
-a.add_entry({'serialNumber': 12345, 'status': 'alive', 'rpm': 80, 'RFID': 0x90})
-a.end_session()
-
 class Uploader(object):
     def __init__(self, dir_path):
         self.dir = os.path.abspath(dir_path)
@@ -59,6 +53,7 @@ class Uploader(object):
         for item in self.collections:
             # we do this b/c DbfilenameShelf instance has no attribute '__exit__'
             db = shelve.open(item)
+            # TODO: NEED HAMZA TO PLUG IN UPLOADER CODE.
             print('[INFO] Uploading', item)
             db.close()
         print('[INFO] Upload successfully finished.')
@@ -70,8 +65,15 @@ class Uploader(object):
                 os.remove(f)
 
 
-up = Uploader(dir_path='queue')
-up.sequential_upload()
+#
+# a = LocalShelve(os.path.join('queue', 'test2.db'))
+# a.add_entry({'serialNumber': 12345, 'status': 'alive', 'rpm': 90, 'RFID': 0x90})
+# a.add_entry({'serialNumber': 12345, 'status': 'alive', 'rpm': 56, 'RFID': 0x90})
+# a.add_entry({'serialNumber': 12345, 'status': 'alive', 'rpm': 80, 'RFID': 0x90})
+# a.end_session()
+#
+# up = Uploader(dir_path='queue')
+# up.sequential_upload()
 
 
 
