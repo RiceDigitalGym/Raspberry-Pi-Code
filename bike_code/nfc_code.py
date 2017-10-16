@@ -22,6 +22,10 @@ serial = util_functions.getserial()
 
 global clf
 
+def send_nfc(post_data):
+    r = requests.post(url=API_PROCESS_ENDPOINT, data=data)
+    return json.loads(r.text)["status"]  # extracting response status
+
 
 def sigint_handler(*args):
     """
@@ -55,10 +59,8 @@ def main():
         logger.info("Tag scanned with RFID " + str(RFID))
         data = {"RFID": RFID, "serialNumber": serial}
         try:
-            r = requests.post(url=API_PROCESS_ENDPOINT, data=data)
-            status = json.loads(r.text)["status"]  # extracting response status
+            status = send_nfc(data)
             print("Tag Status: %s" % status)
-            requests.post(url=API_CHECKRPM_ENDPOINT, data=data)
             logger.debug("Data for tag with RFID " + str(RFID) + " sent with status: " + status)
         except requests.exceptions.RequestException as e:
             print "ERROR: " + str(e)
