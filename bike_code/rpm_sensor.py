@@ -39,6 +39,20 @@ def sigint_handler(*args):
     logger.info("RPM Sensor Disconnected")
     raise SystemExit
 
+def send_rpm(post_data):
+    r = requests.post(url=API_ENDPOINT, data=post_data)
+    return json.loads(r.text)["status"]
+
+def send_end_workout(post_data):
+    r = requests.post(url=API_END_WORKOUT, data=post_data)
+    return json.loads(r.text)["status"]
+
+def send_start_workout(post_data):
+    r = requests.post(url=API_START_WORKOUT, data=post_data)
+    return json.loads(r.text)["status"]
+
+
+
 
 def sensor_callback(channel):
     """
@@ -64,8 +78,7 @@ def sensor_callback(channel):
         print "Rpm: " + str(int(rpm))
         post_data = {"rpm": rpm, "serialNumber": serial}
         try:
-            r = requests.post(url=API_ENDPOINT, data=post_data)
-            status = json.loads(r.text)["status"]
+            status = send_rpm(post_data)
             print "RPM Status: " + status
             logger.debug("RPM of " + str(rpm) + " sent to the server with status: " + status)
         except requests.exceptions.RequestException as error:
@@ -82,9 +95,8 @@ def start_workout():
     global first
     try:
         post_data = {"serialNumber": serial}
-        r = requests.post(url=API_START_WORKOUT, data=post_data)
+        status = send_start_workout(post_data)
         first = False
-        status = json.loads(r.text)["status"]
         print "Start workout status: " + status
         logger.info("Start Workout request sent with status: " + status)
     except requests.exceptions.RequestException as error:
@@ -101,9 +113,8 @@ def end_workout():
 
     try:
         post_data = {"serialNumber": serial}
-        r = requests.post(url=API_END_WORKOUT, data=post_data)
+        status = send_end_workout(post_data)
         first = True
-        status = json.loads(r.text)["status"]
         print "End workout status: " + status
         logger.info("End Workout request sent with status: " + status)
     except requests.exceptions.RequestException as error:

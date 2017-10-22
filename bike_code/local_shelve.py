@@ -66,14 +66,16 @@ class Uploader(object):
 
 
 #
-# a = LocalShelve(os.path.join('queue', 'test2.db'))
-# a.add_entry({'serialNumber': 12345, 'status': 'alive', 'rpm': 90, 'RFID': 0x90})
-# a.add_entry({'serialNumber': 12345, 'status': 'alive', 'rpm': 56, 'RFID': 0x90})
-# a.add_entry({'serialNumber': 12345, 'status': 'alive', 'rpm': 80, 'RFID': 0x90})
-# a.end_session()
-#
-# up = Uploader(dir_path='queue')
-# up.sequential_upload()
+a = LocalShelve(os.path.join('queue', 'test2.db'))
+a.add_entry({'serialNumber': 12345, 'status': 'alive', 'rpm': 90, 'RFID': 0x90})
+a.add_entry({'serialNumber': 12345, 'status': 'alive', 'rpm': 56, 'RFID': 0x90})
+a.add_entry({'serialNumber': 12345, 'status': 'alive', 'rpm': 80, 'RFID': 0x90})
+a.end_session()
+
+a = {'serialNumber': [12345, 12345, 12345], 'status': ['alive', 'alive', 'alive'], 'rpm': [90, 56, 80], 'RFID': [0x90, 0x90, 0x90]}
+
+up = Uploader(dir_path='queue')
+up.sequential_upload()
 
 
 
