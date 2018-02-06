@@ -19,9 +19,9 @@ global last_time    # Time in seconds of the last time the pedal crossed the Hal
 global miss         # Integer to keep track of time since last RPM. Incremented by 1 every 2 seconds.
 
 # Define the API endpoint:
-API_ENDPOINT = "http://52.34.141.31:8000/bbb/bike"
-API_START_WORKOUT = "http://52.34.141.31:8000/bbb/start_workout"
-API_END_WORKOUT = "http://52.34.141.31:8000/bbb/end_workout"
+API_ENDPOINT = "http://54.67.95.108:8000/bbb/bike"
+API_START_WORKOUT = "http://54.67.95.108:8000/bbb/start_workout"
+API_END_WORKOUT = "http://54.67.95.108:8000/bbb/end_workout"
 
 logger = util_functions.get_logger("RPM")
 serial = util_functions.getserial()
