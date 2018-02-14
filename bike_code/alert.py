@@ -16,7 +16,7 @@ import requests
 import subprocess
 
 # API endpoint for testing connection with backend.
-API_TEST_CONNECTION = "http://52.34.141.31:8000/bbb/test_connection"
+API_TEST_CONNECTION = "http://54.67.95.108:8000/bbb/test_connection"
 
 logger = util_functions.get_logger("Alert")
 serial_num = str(util_functions.getserial())          # Serial Number of bike this code is running on
