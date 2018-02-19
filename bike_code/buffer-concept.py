@@ -8,20 +8,22 @@ TODO:
 '''
 
 import subprocess
-import multiprocessing 
+import multiprocessing
 import time
 
+# sending data to the cloud 
 def ping(): 
     while(1):
         c1 = 'ping google.com -n 1'.split()
-        out = subprocess.check_output(c1, shell=True, encoding='utf-8') 
-        out = out.split('\n')
-        target = '' 
-        for line in out: 
-            if 'Reply' in line: 
-                target = line 
-        print(target)
+        out = subprocess.check_output(c1, shell=True) 
+        # out = out.split('\n')
+        # target = '' 
+        # for line in out: 
+        #     if 'Reply' in line: 
+        #         target = line 
+        print(out)
 
+# local process on local hardware 
 def count(): 
     i = 0
     while(1): 
@@ -37,4 +39,4 @@ def main():
     f2.start()
     
 if __name__ == "__main__":
-    main() 
+    ping() 
