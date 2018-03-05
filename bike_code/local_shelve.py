@@ -2,6 +2,8 @@ from __future__ import print_function
 
 import os
 import shelve
+import subprocess
+import multiprocessing
 
 
 class LocalShelve(object):
@@ -12,9 +14,16 @@ class LocalShelve(object):
         :return: None
         '''
         self.filename = filename
-        self.db = shelve.open(self.filename)
+        self.db = shelve.open(self.filename, writeback=True)
         self.keyVals = ['serialNumber', 'status', 'rpm', 'RFID']
         self._init_empty_shelve()
+
+    def __len__(self):
+        return len(self.db['serialNumber'])
+
+    def print(self):
+        for k in self.keyVals:
+            print(k, self.db[k])
 
     def _init_empty_shelve(self):
         for k in self.keyVals:
@@ -26,13 +35,23 @@ class LocalShelve(object):
         :param data: a dictionary object, such as: {'serialNumber':12345, 'status': 'alive', 'rpm': 90, 'RFID':0x90}
         :return: None
         '''
-        if data.keys().sort() != self.keyVals.sort():
+        if list(data.keys()).sort() != list(self.keyVals).sort():
+            print("Wrong Data.")
             print(self.keyVals)
             print(data.keys())
             raise KeyError('Data has unrecognized key values, which LocalShelve did not got initialized with.')
         else:
             for k in self.keyVals:
                 self.db[k].append(data[k])
+        self.db.sync()
+
+    def pop_entry(self):
+        # this modifies the database
+        out_data = {}.fromkeys(self.keyVals)
+        for k in self.keyVals:
+            out_data[k] = self.db[k].pop(0)
+        self.db.sync()
+        return out_data
 
     def end_session(self):
         self.db.close()
@@ -65,18 +84,22 @@ class Uploader(object):
                 os.remove(f)
 
 
+# a = LocalShelve('test_db.db')
+# a.add_entry({'serialNumber': 12345, 'status': 'alive', 'rpm': 90, 'RFID': 0x90})
+# a.add_entry({'serialNumber': 12346, 'status': 'alive', 'rpm': 56, 'RFID': 0x90})
+# a.add_entry({'serialNumber': 12347, 'status': 'alive', 'rpm': 80, 'RFID': 0x90})
+# # print(len(a))
+# print(a.print())
+# print(a.pop_entry())
+# print(a.print())
+# a.end_session()
+
 #
-a = LocalShelve(os.path.join('queue', 'test2.db'))
-a.add_entry({'serialNumber': 12345, 'status': 'alive', 'rpm': 90, 'RFID': 0x90})
-a.add_entry({'serialNumber': 12345, 'status': 'alive', 'rpm': 56, 'RFID': 0x90})
-a.add_entry({'serialNumber': 12345, 'status': 'alive', 'rpm': 80, 'RFID': 0x90})
-a.end_session()
-
-a = {'serialNumber': [12345, 12345, 12345], 'status': ['alive', 'alive', 'alive'], 'rpm': [90, 56, 80], 'RFID': [0x90, 0x90, 0x90]}
-
-up = Uploader(dir_path='queue')
-up.sequential_upload()
-
+# a = {'serialNumber': [12345, 12345, 12345], 'status': ['alive', 'alive', 'alive'], 'rpm': [90, 56, 80], 'RFID': [0x90, 0x90, 0x90]}
+#
+# up = Uploader(dir_path='queue')
+# up.sequential_upload()
+#
 
 
 
