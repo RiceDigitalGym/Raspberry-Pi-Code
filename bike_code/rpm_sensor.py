@@ -75,8 +75,8 @@ def sensor_callback(channel):
     rpm = (1 / (current_time - last_time)) * 60
 
     if 200 > rpm > 10:
-        print "Rpm: " + str(int(rpm))
-        post_data = {"rpm": rpm, "serialNumber": serial}
+        print "Rpm: " + str(int(rpm)) + " Time:" + str(int(current_time * 1000))
+        post_data = {"rpm": rpm, "serialNumber": serial, "time": current_time}
         try:
             status = send_rpm(post_data)
             print "RPM Status: " + status
